@@ -3,11 +3,12 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { ChakraProvider } from '@chakra-ui/react'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-
-import { Layout } from './components/Layout'
-import { NotFound } from './pages/404'
 import { HelmetProvider } from 'react-helmet-async'
-import { Home } from './pages/Home'
+
+import { Layout } from '~/components/Layout'
+import { NotFound } from '~/pages/404'
+import { Home } from '~/pages/Home'
+import { theme } from '~/styles/customTheme'
 
 const ROUTER = createBrowserRouter([
     {
@@ -24,7 +25,7 @@ const ROUTER = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <React.StrictMode>
         <HelmetProvider>
-            <ChakraProvider>
+            <ChakraProvider theme={theme}>
                 <RouterProvider router={ROUTER} />
             </ChakraProvider>
         </HelmetProvider>
