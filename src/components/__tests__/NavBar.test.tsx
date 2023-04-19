@@ -46,7 +46,7 @@ test('renders NavBar links', () => {
 })
 
 test('toggles dropdown menu when hamburger icon is clicked', () => {
-    const { getByLabelText, getByText, queryByText, getAllByText } = render(
+    const { getByLabelText, getAllByText } = render(
         <BrowserRouter>
             <NavBar />
         </BrowserRouter>
