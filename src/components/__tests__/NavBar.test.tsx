@@ -1,15 +1,7 @@
-import React from 'react'
-
 import { render, fireEvent } from '@testing-library/react'
 import { BrowserRouter } from 'react-router-dom'
 
 import { NavBar } from '../NavBar'
-
-const RouterWrapper = (
-    <BrowserRouter>
-        <NavBar />
-    </BrowserRouter>
-)
 
 test('renders NavBar without crashing', () => {
     render(
