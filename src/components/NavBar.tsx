@@ -1,7 +1,8 @@
-import { Box, Flex, HStack, Link, IconButton, Button, useDisclosure, useColorModeValue, Stack, Image, Divider } from '@chakra-ui/react'
-import { HamburgerIcon, CloseIcon, DownloadIcon } from '@chakra-ui/icons'
-import { Link as RouterLink, useLocation } from 'react-router-dom'
 import { Fragment } from 'react'
+
+import { CloseIcon, HamburgerIcon } from '@chakra-ui/icons'
+import { Box, Divider, Flex, HStack, IconButton, Link, Stack, useDisclosure } from '@chakra-ui/react'
+import { Link as RouterLink, useLocation } from 'react-router-dom'
 
 type NavLinkProps = {
     children: string
