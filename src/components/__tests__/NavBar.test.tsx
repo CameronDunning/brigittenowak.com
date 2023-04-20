@@ -1,15 +1,7 @@
-import React from 'react'
-
 import { render, fireEvent } from '@testing-library/react'
 import { BrowserRouter } from 'react-router-dom'
 
 import { NavBar } from '../NavBar'
-
-const RouterWrapper = (
-    <BrowserRouter>
-        <NavBar />
-    </BrowserRouter>
-)
 
 test('renders NavBar without crashing', () => {
     render(
@@ -46,7 +38,7 @@ test('renders NavBar links', () => {
 })
 
 test('toggles dropdown menu when hamburger icon is clicked', () => {
-    const { getByLabelText, getByText, queryByText, getAllByText } = render(
+    const { getByLabelText, getAllByText } = render(
         <BrowserRouter>
             <NavBar />
         </BrowserRouter>
