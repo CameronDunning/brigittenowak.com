@@ -19,7 +19,7 @@ on:
 #   REACT_APP_APP_ID: ${{ secrets.REACT_APP_APP_ID }}
 
 jobs:
-    jest:
+    vitest:
         runs-on: ubuntu-latest
 
         steps:
