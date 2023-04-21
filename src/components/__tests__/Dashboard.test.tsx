@@ -1,0 +1,37 @@
+import { fireEvent, render } from '@testing-library/react'
+
+import { Dashboard } from '../Dashboard'
+
+test('renders Dashboard without crashing', () => {
+    render(<Dashboard />)
+})
+
+test('dashboard renders the correct title', () => {
+    const { getByText } = render(<Dashboard />)
+    const title = getByText(/Welcome to your dashboard/i)
+    expect(title).toBeInTheDocument()
+})
+
+test('clicking the upload photo button opens the form', () => {
+    const { getByText, getByTestId } = render(<Dashboard />)
+    const uploadPhotoButton = getByText(/Upload Photo/i)
+    expect(uploadPhotoButton).toBeInTheDocument()
+
+    fireEvent.click(uploadPhotoButton)
+
+    // upload photo button is now disabled
+    expect(uploadPhotoButton).toBeDisabled()
+
+    // form is now visible
+    const form = getByTestId(/image-upload-form/)
+    expect(form).toBeInTheDocument()
+
+    // clicking the close button closes the form
+    const closeButton = getByTestId(/close-image-form-button/)
+    fireEvent.click(closeButton)
+
+    // form is now hidden
+    expect(form).not.toBeInTheDocument()
+})
+
+// Test the images list

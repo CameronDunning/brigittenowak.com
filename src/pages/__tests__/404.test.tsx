@@ -22,7 +22,7 @@ test('404 page renders correctly', () => {
 })
 
 test('404 page has the correct styling', () => {
-    const { getByRole, getByText } = render(
+    const { getByRole } = render(
         <BrowserRouter>
             <NotFound />
         </BrowserRouter>

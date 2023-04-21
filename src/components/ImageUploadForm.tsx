@@ -17,11 +17,11 @@ import {
     Spinner,
     useToast,
 } from '@chakra-ui/react'
+import { ref, set } from 'firebase/database'
 import { v4 } from 'uuid'
-import { ref, push, set } from 'firebase/database'
 
-import { useUser } from '~/stores/UserStore'
 import { db } from '~/config/firebase'
+import { useUser } from '~/stores/UserStore'
 
 type ImageUploadFormProps = {
     setShowForm: (showForm: boolean) => void
@@ -55,7 +55,7 @@ export const ImageUploadForm = ({ setShowForm }: ImageUploadFormProps) => {
             return
         }
 
-        if (!title || !type || !url) {
+        if (!title || !type || !url || !id) {
             toast({
                 title: 'Please fill out all fields',
                 status: 'error',
@@ -118,10 +118,7 @@ export const ImageUploadForm = ({ setShowForm }: ImageUploadFormProps) => {
         const id = v4()
         setId(id)
 
-        // if (!imageToUpload || !user) {
-        //     return
-        // }
-        if (!imageToUpload) {
+        if (!imageToUpload || !user) {
             return
         }
 
@@ -161,7 +158,7 @@ export const ImageUploadForm = ({ setShowForm }: ImageUploadFormProps) => {
     }
 
     return (
-        <Box w="100%" p={2} border={'1px solid white'} borderRadius={5} position="relative">
+        <Box w="100%" p={2} border={'1px solid white'} borderRadius={5} position="relative" data-testid="image-upload-form">
             {isSaving ? (
                 <Center position="absolute" top="0" left="0" w="100%" h="100%" bg="rgba(0,0,0,0.5)" zIndex={10}>
                     <Spinner />
@@ -176,7 +173,8 @@ export const ImageUploadForm = ({ setShowForm }: ImageUploadFormProps) => {
                 top="-5px"
                 right="-5px"
                 position="absolute"
-                zIndex={10}>
+                zIndex={10}
+                data-testid="close-image-form-button">
                 <SmallCloseIcon />
             </IconButton>
             <form onSubmit={handleSubmit}>
@@ -195,7 +193,7 @@ export const ImageUploadForm = ({ setShowForm }: ImageUploadFormProps) => {
                                     {isUploading ? (
                                         <Spinner size="xl" />
                                     ) : (
-                                        <IconButton aria-label="upload" onClick={handleUploadClick}>
+                                        <IconButton aria-label="upload" onClick={handleUploadClick} data-testid="image-upload-button">
                                             <AddIcon />
                                         </IconButton>
                                     )}
@@ -208,43 +206,60 @@ export const ImageUploadForm = ({ setShowForm }: ImageUploadFormProps) => {
                             <FormLabel w="100px" my="auto">
                                 Title
                             </FormLabel>
-                            <Input type="text" value={title} placeholder="Title of the piece" onChange={e => setTitle(e.target.value)} />
+                            <Input
+                                type="text"
+                                value={title}
+                                placeholder="Title of the piece"
+                                onChange={e => setTitle(e.target.value)}
+                                borderColor="white"
+                            />
                         </FormControl>
-                        <FormControl id="title" isRequired display="flex" my={2}>
+                        <FormControl id="type" isRequired display="flex" my={2}>
                             <FormLabel w="100px" my="auto">
                                 Type
                             </FormLabel>
-                            <Select value={type} placeholder="--" onChange={e => setType(e.target.value)}>
+                            <Select value={type} placeholder="--" onChange={e => setType(e.target.value)} borderColor="white">
                                 <option value="oils">Oils</option>
                                 <option value="eggTempera">Egg Tempera</option>
                                 <option value="serigraphs">Serigraphs</option>
                             </Select>
                         </FormControl>
-                        <FormControl id="title" display="flex" my={2}>
+                        <FormControl id="otherText" display="flex" my={2}>
                             <FormLabel w="100px" my="auto">
                                 Other Text
                             </FormLabel>
-                            <Input type="text" value={otherText} placeholder="(Edition, etc)" onChange={e => setOtherText(e.target.value)} />
+                            <Input
+                                type="text"
+                                value={otherText}
+                                placeholder="(Edition, etc)"
+                                onChange={e => setOtherText(e.target.value)}
+                                borderColor="white"
+                            />
                         </FormControl>
-                        <FormControl id="title" display="flex" my={2}>
+                        <FormControl id="dimensions" display="flex" my={2}>
                             <FormLabel w="100px" my="auto">
                                 Dimensions
                             </FormLabel>
-                            <Input type="text" value={dimensions} placeholder={'eg 24" x 26"'} onChange={e => setDimensions(e.target.value)} />
+                            <Input
+                                type="text"
+                                value={dimensions}
+                                placeholder={'eg 24" x 26"'}
+                                onChange={e => setDimensions(e.target.value)}
+                                borderColor="white"
+                            />
                         </FormControl>
-                        {/*  */}
                         <Flex justifyContent="flex-start">
-                            <FormControl id="title" display="flex" my={2}>
+                            <FormControl id="sold" display="flex" my={2}>
                                 <FormLabel w="100px" my="auto">
                                     Sold
                                 </FormLabel>
-                                <Checkbox isChecked={sold} onChange={e => setSold(e.target.checked)} />
+                                <Checkbox isChecked={sold} onChange={e => setSold(e.target.checked)} borderColor="white" />
                             </FormControl>
-                            <FormControl id="title" display="flex" my={2}>
+                            <FormControl id="hidden" display="flex" my={2}>
                                 <FormLabel w="100px" my="auto">
                                     Hidden
                                 </FormLabel>
-                                <Checkbox isChecked={hidden} onChange={e => setHidden(e.target.checked)} />
+                                <Checkbox isChecked={hidden} onChange={e => setHidden(e.target.checked)} borderColor="white" />
                             </FormControl>
                         </Flex>
                         <Flex w="100%" justifyContent="flex-end">
