@@ -1,5 +1,6 @@
 import { render } from '@testing-library/react'
 import { BrowserRouter } from 'react-router-dom'
+import { expect, test } from 'vitest'
 
 import { NotFound } from '../404'
 

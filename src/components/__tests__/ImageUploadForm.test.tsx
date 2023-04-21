@@ -1,5 +1,5 @@
-import { fireEvent, getByDisplayValue, getByPlaceholderText, render } from '@testing-library/react'
-import { vi } from 'vitest'
+import { fireEvent, render } from '@testing-library/react'
+import { expect, test, vi } from 'vitest'
 
 import { ImageUploadForm } from '../ImageUploadForm'
 

@@ -1,4 +1,5 @@
 import { fireEvent, render } from '@testing-library/react'
+import { expect, test } from 'vitest'
 
 import { Dashboard } from '../Dashboard'
 

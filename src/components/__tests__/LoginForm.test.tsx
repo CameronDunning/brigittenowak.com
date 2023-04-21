@@ -1,4 +1,5 @@
-import { render, fireEvent } from '@testing-library/react'
+import { render } from '@testing-library/react'
+import { expect, test } from 'vitest'
 
 import { LoginForm } from '../LoginForm'
 
@@ -7,7 +8,7 @@ test('renders LoginForm without crashing', () => {
 })
 
 test('it renders the correct fields', () => {
-    const { getByRole, getAllByRole, container, getByLabelText } = render(<LoginForm />)
+    const { getByLabelText } = render(<LoginForm />)
 
     expect(getByLabelText(/Email/)).toBeInTheDocument()
     expect(getByLabelText(/Password/)).toBeInTheDocument()
