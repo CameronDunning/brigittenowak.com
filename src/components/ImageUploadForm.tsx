@@ -1,32 +1,108 @@
 import { useState } from 'react'
 
-import { AddIcon } from '@chakra-ui/icons'
-import { Box, Center, Grid, GridItem, IconButton, Spinner } from '@chakra-ui/react'
-import { SmallCloseIcon } from '@chakra-ui/icons'
+import { AddIcon, SmallCloseIcon } from '@chakra-ui/icons'
+import {
+    Box,
+    Button,
+    Center,
+    Checkbox,
+    Flex,
+    FormControl,
+    FormLabel,
+    Grid,
+    GridItem,
+    IconButton,
+    Input,
+    Select,
+    Spinner,
+    useToast,
+} from '@chakra-ui/react'
+import { v4 } from 'uuid'
+import { ref, push, set } from 'firebase/database'
 
 import { useUser } from '~/stores/UserStore'
+import { db } from '~/config/firebase'
 
 type ImageUploadFormProps = {
     setShowForm: (showForm: boolean) => void
 }
 
 export const ImageUploadForm = ({ setShowForm }: ImageUploadFormProps) => {
+    const toast = useToast()
+
     const user = useUser()
 
     // Form state
     const [title, setTitle] = useState('')
     const [type, setType] = useState('')
-    const [image, setImage] = useState(null)
     const [dimensions, setDimensions] = useState('')
     const [sold, setSold] = useState(false)
+    const [hidden, setHidden] = useState(false)
     const [otherText, setOtherText] = useState('')
+    const [isSaving, setIsSaving] = useState(false)
 
-    // Image Upload State
-    const [isLoading, setIsLoading] = useState(false)
+    // Image State
+    const [isUploading, setIsUploading] = useState(false)
+    const [id, setId] = useState('')
+    const [url, setUrl] = useState('')
+    const [width, setWidth] = useState(0)
+    const [height, setHeight] = useState(0)
 
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault()
-        // Here you can handle the submission of the form, including storing the image in the database and getting the URL.
+
+        if (!user) {
+            return
+        }
+
+        if (!title || !type || !url) {
+            toast({
+                title: 'Please fill out all fields',
+                status: 'error',
+                duration: 9000,
+                isClosable: true,
+            })
+            return
+        }
+
+        setIsSaving(true)
+
+        const newImage = {
+            id,
+            title,
+            type,
+            url,
+            width,
+            height,
+            dimensions,
+            sold,
+            otherText,
+            hidden,
+        }
+
+        // Add to realtime database
+        const imageRef = ref(db, `/images/${id}`)
+        set(imageRef, newImage)
+            .then(() => {
+                toast({
+                    title: 'Image uploaded',
+                    description: 'Your image has been uploaded',
+                    status: 'success',
+                    duration: 9000,
+                    isClosable: true,
+                })
+                setIsSaving(false)
+                setShowForm(false)
+            })
+            .catch(error => {
+                toast({
+                    title: 'Error uploading image',
+                    description: error.message,
+                    status: 'error',
+                    duration: 9000,
+                    isClosable: true,
+                })
+            })
     }
 
     const handleUploadClick = () => {
@@ -38,13 +114,59 @@ export const ImageUploadForm = ({ setShowForm }: ImageUploadFormProps) => {
     }
 
     const handleImageUpload = (event: Event) => {
-        const uploadedImage = (event.target as HTMLInputElement)?.files?.[0]
+        const imageToUpload = (event.target as HTMLInputElement)?.files?.[0]
+        const id = v4()
+        setId(id)
+
+        // if (!imageToUpload || !user) {
+        //     return
+        // }
+        if (!imageToUpload) {
+            return
+        }
 
         // Upload to cloudinary and get the url
+        const formData = new FormData()
+        formData.append('file', imageToUpload)
+        formData.append('upload_preset', import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET)
+        formData.append('public_id', id)
+
+        setIsUploading(true)
+
+        fetch(import.meta.env.VITE_CLOUDINARY_BASE_URL, {
+            method: 'POST',
+            body: formData,
+        })
+            .then(response => {
+                return response.json()
+            })
+            .then(response => {
+                // Get url from Cloudinary response
+                const { url, width, height } = response
+                setUrl(url)
+                setWidth(width)
+                setHeight(height)
+                setIsUploading(false)
+            })
+            .catch(err => {
+                console.error(err)
+                toast({
+                    title: 'Error uploading image, please try again',
+                    description: err.message,
+                    status: 'error',
+                    duration: 9000,
+                    isClosable: true,
+                })
+            })
     }
 
     return (
-        <Box w="4xl" p={2} border={'1px solid white'} borderRadius={5} position="relative">
+        <Box w="100%" p={2} border={'1px solid white'} borderRadius={5} position="relative">
+            {isSaving ? (
+                <Center position="absolute" top="0" left="0" w="100%" h="100%" bg="rgba(0,0,0,0.5)" zIndex={10}>
+                    <Spinner />
+                </Center>
+            ) : null}
             <IconButton
                 aria-label="close form"
                 onClick={() => setShowForm(false)}
@@ -53,7 +175,8 @@ export const ImageUploadForm = ({ setShowForm }: ImageUploadFormProps) => {
                 colorScheme="red"
                 top="-5px"
                 right="-5px"
-                position="absolute">
+                position="absolute"
+                zIndex={10}>
                 <SmallCloseIcon />
             </IconButton>
             <form onSubmit={handleSubmit}>
@@ -64,19 +187,72 @@ export const ImageUploadForm = ({ setShowForm }: ImageUploadFormProps) => {
                     }}
                     gap={4}>
                     <GridItem>
-                        <Box w="100%" h="0" pb="100%" position="relative" border="2px dashed lightGray" borderRadius={10} background="gray.600">
-                            <Center position="absolute" top="0" left="0" w="100%" h="100%">
-                                {isLoading ? (
-                                    <Spinner size="xl" />
-                                ) : (
-                                    <IconButton aria-label="upload" onClick={handleUploadClick}>
-                                        <AddIcon />
-                                    </IconButton>
-                                )}
-                            </Center>
+                        <Box w="100%" pb={url ? 0 : '100%'} position="relative" border="2px dashed lightGray" borderRadius={10} background="gray.600">
+                            {url ? (
+                                <img src={url} alt="uploaded image" style={{ width: '100%', objectFit: 'cover' }} />
+                            ) : (
+                                <Center position="absolute" top="0" left="0" w="100%" h="100%">
+                                    {isUploading ? (
+                                        <Spinner size="xl" />
+                                    ) : (
+                                        <IconButton aria-label="upload" onClick={handleUploadClick}>
+                                            <AddIcon />
+                                        </IconButton>
+                                    )}
+                                </Center>
+                            )}
                         </Box>
                     </GridItem>
-                    <GridItem>test2</GridItem>
+                    <GridItem>
+                        <FormControl id="title" isRequired display="flex" my={2}>
+                            <FormLabel w="100px" my="auto">
+                                Title
+                            </FormLabel>
+                            <Input type="text" value={title} placeholder="Title of the piece" onChange={e => setTitle(e.target.value)} />
+                        </FormControl>
+                        <FormControl id="title" isRequired display="flex" my={2}>
+                            <FormLabel w="100px" my="auto">
+                                Type
+                            </FormLabel>
+                            <Select value={type} placeholder="--" onChange={e => setType(e.target.value)}>
+                                <option value="oils">Oils</option>
+                                <option value="eggTempera">Egg Tempera</option>
+                                <option value="serigraphs">Serigraphs</option>
+                            </Select>
+                        </FormControl>
+                        <FormControl id="title" display="flex" my={2}>
+                            <FormLabel w="100px" my="auto">
+                                Other Text
+                            </FormLabel>
+                            <Input type="text" value={otherText} placeholder="(Edition, etc)" onChange={e => setOtherText(e.target.value)} />
+                        </FormControl>
+                        <FormControl id="title" display="flex" my={2}>
+                            <FormLabel w="100px" my="auto">
+                                Dimensions
+                            </FormLabel>
+                            <Input type="text" value={dimensions} placeholder={'eg 24" x 26"'} onChange={e => setDimensions(e.target.value)} />
+                        </FormControl>
+                        {/*  */}
+                        <Flex justifyContent="flex-start">
+                            <FormControl id="title" display="flex" my={2}>
+                                <FormLabel w="100px" my="auto">
+                                    Sold
+                                </FormLabel>
+                                <Checkbox isChecked={sold} onChange={e => setSold(e.target.checked)} />
+                            </FormControl>
+                            <FormControl id="title" display="flex" my={2}>
+                                <FormLabel w="100px" my="auto">
+                                    Hidden
+                                </FormLabel>
+                                <Checkbox isChecked={hidden} onChange={e => setHidden(e.target.checked)} />
+                            </FormControl>
+                        </Flex>
+                        <Flex w="100%" justifyContent="flex-end">
+                            <Button my={2} mr={2} colorScheme="green" variant="solid" onClick={handleSubmit} type="submit" justifySelf={'flex-end'}>
+                                Submit
+                            </Button>
+                        </Flex>
+                    </GridItem>
                 </Grid>
             </form>
         </Box>

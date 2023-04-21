@@ -14,6 +14,18 @@ export const theme = extendTheme({
             800: '#473725',
             900: '#1f140a',
         },
+        beige: {
+            50: '#f6f4ef',
+            100: '#e8e2d3',
+            200: '#dad2b8',
+            300: '#ccc29d',
+            400: '#daccb4', // main color
+            500: '#b6b08f',
+            600: '#91876c',
+            700: '#6c5e48',
+            800: '#473725',
+            900: '#1f140a',
+        },
     },
     fonts: {
         heading: 'Helvetica Neue, sans-serif',

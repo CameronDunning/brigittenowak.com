@@ -6,7 +6,5 @@ import { useUser } from '~/stores/UserStore'
 export const Admin = () => {
     const user = useUser()
 
-    return <Dashboard />
-
     return <>{user ? <Dashboard /> : <LoginForm />}</>
 }

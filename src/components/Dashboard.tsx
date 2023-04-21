@@ -30,8 +30,8 @@ export const Dashboard = () => {
     }
 
     return (
-        <Box w="4xl">
-            <Heading size="lg" py="2" borderBottom={'1px solid #daccb4'}>
+        <Box w={{ base: '100%', md: '4xl' }}>
+            <Heading size="lg" py="2" px={{ base: 2, md: 0 }} borderBottom={'1px solid #daccb4'}>
                 Welcome to your dashboard, from here you can manage the photos on your site.
             </Heading>
             <Grid
@@ -41,14 +41,14 @@ export const Dashboard = () => {
                 }}
                 gap={4}></Grid>
             <HStack w="100%" p={4} justifyContent="space-between">
-                <Button onClick={handleLogout} colorScheme="green">
+                <Button onClick={() => setShowForm(true)} colorScheme="green" isDisabled={showForm}>
                     Upload Photo
                 </Button>
                 <Button onClick={handleLogout} colorScheme="red">
                     Log out
                 </Button>
             </HStack>
-            <ImageUploadForm setShowForm={setShowForm} />
+            {showForm && <ImageUploadForm setShowForm={setShowForm} />}
         </Box>
     )
 }
