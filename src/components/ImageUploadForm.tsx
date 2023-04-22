@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { ChangeEvent, useState } from 'react'
 
 import { AddIcon, SmallCloseIcon } from '@chakra-ui/icons'
 import {
@@ -25,6 +25,12 @@ import { useUser } from '~/stores/UserStore'
 
 type ImageUploadFormProps = {
     setShowForm: (showForm: boolean) => void
+}
+
+declare global {
+    interface Window {
+        Cypress: unknown
+    }
 }
 
 export const ImageUploadForm = ({ setShowForm }: ImageUploadFormProps) => {
@@ -81,12 +87,13 @@ export const ImageUploadForm = ({ setShowForm }: ImageUploadFormProps) => {
         }
 
         // Add to realtime database
-        const imageRef = ref(db, `/images/${id}`)
+        const testingFolder = import.meta.env.MODE === 'test' || window.Cypress ? 'testing/' : ''
+        const imageRef = ref(db, `/images/${testingFolder}${id}`)
         set(imageRef, newImage)
             .then(() => {
                 toast({
                     title: 'Image uploaded',
-                    description: 'Your image has been uploaded',
+                    description: 'Image Submitted Successfully',
                     status: 'success',
                     duration: 9000,
                     isClosable: true,
@@ -95,8 +102,10 @@ export const ImageUploadForm = ({ setShowForm }: ImageUploadFormProps) => {
                 setShowForm(false)
             })
             .catch(error => {
+                setIsSaving(false)
+                console.error('error', error)
                 toast({
-                    title: 'Error uploading image',
+                    title: 'Error Submitting form',
                     description: error.message,
                     status: 'error',
                     duration: 9000,
@@ -106,14 +115,11 @@ export const ImageUploadForm = ({ setShowForm }: ImageUploadFormProps) => {
     }
 
     const handleUploadClick = () => {
-        const input = document.createElement('input')
-        input.type = 'file'
-        input.accept = 'image/*'
-        input.onchange = handleImageUpload
-        input.click()
+        const inputElement = document.getElementById('imageUploadInput')
+        inputElement?.click()
     }
 
-    const handleImageUpload = (event: Event) => {
+    const handleImageUpload = (event: ChangeEvent<HTMLInputElement>) => {
         const imageToUpload = (event.target as HTMLInputElement)?.files?.[0]
         const id = v4()
         setId(id)
@@ -193,9 +199,18 @@ export const ImageUploadForm = ({ setShowForm }: ImageUploadFormProps) => {
                                     {isUploading ? (
                                         <Spinner size="xl" />
                                     ) : (
-                                        <IconButton aria-label="upload" onClick={handleUploadClick} data-testid="image-upload-button">
-                                            <AddIcon />
-                                        </IconButton>
+                                        <>
+                                            <IconButton aria-label="upload" onClick={handleUploadClick} data-testid="image-upload-button">
+                                                <AddIcon />
+                                            </IconButton>
+                                            <input
+                                                type="file"
+                                                id="imageUploadInput"
+                                                accept="image/*"
+                                                onChange={handleImageUpload}
+                                                style={{ display: 'none' }}
+                                            />
+                                        </>
                                     )}
                                 </Center>
                             )}
@@ -273,12 +288,3 @@ export const ImageUploadForm = ({ setShowForm }: ImageUploadFormProps) => {
         </Box>
     )
 }
-
-/* Form fields:
-Title
-Type
-Image
-Dimensions
-Sold
-Other text
-*/

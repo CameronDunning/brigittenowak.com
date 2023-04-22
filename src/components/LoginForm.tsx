@@ -67,13 +67,13 @@ export const LoginForm = () => {
                                     Sign in
                                 </Button>
                                 {errorMissingFields && (
-                                    <Alert status="error">
+                                    <Alert status="error" variant="solid">
                                         <AlertIcon />
                                         Please fill all fields
                                     </Alert>
                                 )}
                                 {errorPassword && (
-                                    <Alert status="error">
+                                    <Alert status="error" variant="solid">
                                         <AlertIcon />
                                         {errorPassword}
                                     </Alert>

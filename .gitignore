@@ -16,3 +16,4 @@ dist-ssr
 
 # env files
 .env
+cypress.env.json
