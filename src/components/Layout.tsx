@@ -2,15 +2,17 @@ import { useEffect } from 'react'
 
 import { Stack } from '@chakra-ui/react'
 import { Outlet } from 'react-router-dom'
+import { onValue, ref } from 'firebase/database'
 
-import { auth } from '~/config/firebase'
+import { auth, db } from '~/config/firebase'
 import { useSetUser } from '~/stores/UserStore'
-
 import { Footer } from '~/components/Footer'
 import { NavBar } from '~/components/NavBar'
+import { useSetImages } from '~/stores/ImagesStore'
 
 export const Layout = () => {
     const setUser = useSetUser()
+    const setImages = useSetImages()
 
     // Listen to auth state changes and set the user globally
     useEffect(() => {
@@ -20,6 +22,16 @@ export const Layout = () => {
 
         return () => unsubscribe()
     })
+
+    // Get all the images from Firebase
+    useEffect(() => {
+        const imagesRef = ref(db, `/images/`)
+        onValue(imagesRef, snapshot => {
+            const imageSnapshot = snapshot.val()
+            delete imageSnapshot.testing
+            setImages(imageSnapshot)
+        })
+    }, [])
 
     return (
         <>

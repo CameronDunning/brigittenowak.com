@@ -1,11 +1,11 @@
 import { create } from 'zustand'
 
-type UserState = {
+type UserStoreState = {
     user: any
     setUser: (user: any) => void
 }
 
-const UserStore = create<UserState>()(set => ({
+const UserStore = create<UserStoreState>()(set => ({
     user: null,
     setUser: (user: any) => set({ user }),
 }))

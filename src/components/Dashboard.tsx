@@ -8,6 +8,8 @@ import { auth } from '~/config/firebase'
 import { useSetUser } from '~/stores/UserStore'
 
 import { NOTIFICATION_DURATION } from '~/config/constants'
+import { AdminImageList } from './AdminImages/AdminImageList'
+import { MAIN_COLOUR } from '~/styles/customTheme'
 
 export const Dashboard = () => {
     const toast = useToast()
@@ -31,7 +33,7 @@ export const Dashboard = () => {
 
     return (
         <Box w={{ base: '100%', md: '4xl' }}>
-            <Heading size="lg" py="2" px={{ base: 2, md: 0 }} borderBottom={'1px solid #daccb4'}>
+            <Heading as="h1" size="lg" py="2" px={{ base: 2, md: 0 }} borderBottom={`1px solid ${MAIN_COLOUR}`}>
                 Welcome to your dashboard, from here you can manage the photos on your site.
             </Heading>
             <Grid
@@ -49,6 +51,7 @@ export const Dashboard = () => {
                 </Button>
             </HStack>
             {showForm && <ImageUploadForm setShowForm={setShowForm} />}
+            <AdminImageList />
         </Box>
     )
 }

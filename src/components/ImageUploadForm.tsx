@@ -22,6 +22,7 @@ import { v4 } from 'uuid'
 
 import { db } from '~/config/firebase'
 import { useUser } from '~/stores/UserStore'
+import { DISPLAY_TYPES_MAP, TYPES } from '~/config/constants'
 
 type ImageUploadFormProps = {
     setShowForm: (showForm: boolean) => void
@@ -136,7 +137,7 @@ export const ImageUploadForm = ({ setShowForm }: ImageUploadFormProps) => {
 
         setIsUploading(true)
 
-        fetch(import.meta.env.VITE_CLOUDINARY_BASE_URL, {
+        fetch(import.meta.env.VITE_CLOUDINARY_UPLOAD_BASE_URL, {
             method: 'POST',
             body: formData,
         })
@@ -164,7 +165,7 @@ export const ImageUploadForm = ({ setShowForm }: ImageUploadFormProps) => {
     }
 
     return (
-        <Box w="100%" p={2} border={'1px solid white'} borderRadius={5} position="relative" data-testid="image-upload-form">
+        <Box w="100%" p={2} my={4} border={'1px solid white'} borderRadius={5} position="relative" data-testid="image-upload-form">
             {isSaving ? (
                 <Center position="absolute" top="0" left="0" w="100%" h="100%" bg="rgba(0,0,0,0.5)" zIndex={10}>
                     <Spinner />
@@ -234,9 +235,11 @@ export const ImageUploadForm = ({ setShowForm }: ImageUploadFormProps) => {
                                 Type
                             </FormLabel>
                             <Select value={type} placeholder="--" onChange={e => setType(e.target.value)} borderColor="white">
-                                <option value="oils">Oils</option>
-                                <option value="eggTempera">Egg Tempera</option>
-                                <option value="serigraphs">Serigraphs</option>
+                                {TYPES.map(type => (
+                                    <option key={type} value={type}>
+                                        {DISPLAY_TYPES_MAP[type]}
+                                    </option>
+                                ))}
                             </Select>
                         </FormControl>
                         <FormControl id="otherText" display="flex" my={2}>
