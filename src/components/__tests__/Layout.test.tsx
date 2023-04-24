@@ -1,8 +1,13 @@
 import { render } from '@testing-library/react'
+import { BrowserRouter } from 'react-router-dom'
 import { test } from 'vitest'
 
-import { Dashboard } from '../Dashboard'
+import { Layout } from '../Layout'
 
-test('renders Dashboard without crashing', () => {
-    render(<Dashboard />)
+test('renders Layout without crashing', () => {
+    render(
+        <BrowserRouter>
+            <Layout />
+        </BrowserRouter>
+    )
 })

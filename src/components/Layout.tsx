@@ -25,7 +25,8 @@ export const Layout = () => {
 
     // Get all the images from Firebase
     useEffect(() => {
-        const imagesRef = ref(db, `/images/`)
+        const testingFolder = import.meta.env.VITE_CLOUDINARY_FOLDER.includes('testing') ? '-testing' : ''
+        const imagesRef = ref(db, `/images${testingFolder}/`)
         onValue(imagesRef, snapshot => {
             const imageSnapshot = snapshot.val()
             delete imageSnapshot.testing

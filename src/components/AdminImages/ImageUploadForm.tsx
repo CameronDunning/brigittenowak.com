@@ -20,12 +20,14 @@ import {
 import { ref, set } from 'firebase/database'
 import { v4 } from 'uuid'
 
+import { DISPLAY_TYPES_MAP, TYPES } from '~/config/constants'
 import { db } from '~/config/firebase'
 import { useUser } from '~/stores/UserStore'
-import { DISPLAY_TYPES_MAP, TYPES } from '~/config/constants'
+import { Image } from '~/types'
 
 type ImageUploadFormProps = {
     setShowForm: (showForm: boolean) => void
+    image?: Image
 }
 
 declare global {
@@ -34,26 +36,26 @@ declare global {
     }
 }
 
-export const ImageUploadForm = ({ setShowForm }: ImageUploadFormProps) => {
+export const ImageUploadForm = ({ setShowForm, image }: ImageUploadFormProps) => {
     const toast = useToast()
 
     const user = useUser()
 
     // Form state
-    const [title, setTitle] = useState('')
-    const [type, setType] = useState('')
-    const [dimensions, setDimensions] = useState('')
-    const [sold, setSold] = useState(false)
-    const [hidden, setHidden] = useState(false)
-    const [otherText, setOtherText] = useState('')
+    const [title, setTitle] = useState(image?.title || '')
+    const [type, setType] = useState(image?.type || '')
+    const [dimensions, setDimensions] = useState(image?.dimensions || '')
+    const [sold, setSold] = useState(image?.sold || false)
+    const [hidden, setHidden] = useState(image?.hidden || false)
+    const [otherText, setOtherText] = useState(image?.otherText || '')
     const [isSaving, setIsSaving] = useState(false)
 
     // Image State
     const [isUploading, setIsUploading] = useState(false)
-    const [id, setId] = useState('')
-    const [url, setUrl] = useState('')
-    const [width, setWidth] = useState(0)
-    const [height, setHeight] = useState(0)
+    const [id, setId] = useState(image?.id || '')
+    const [url, setUrl] = useState(image?.url || '')
+    const [width, setWidth] = useState(image?.width || 0)
+    const [height, setHeight] = useState(image?.height || 0)
 
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault()
@@ -78,18 +80,19 @@ export const ImageUploadForm = ({ setShowForm }: ImageUploadFormProps) => {
             id,
             title,
             type,
+            otherText,
+            dimensions,
+            sold,
+            hidden,
             url,
             width,
             height,
-            dimensions,
-            sold,
-            otherText,
-            hidden,
         }
 
         // Add to realtime database
-        const testingFolder = import.meta.env.MODE === 'test' || window.Cypress ? 'testing/' : ''
-        const imageRef = ref(db, `/images/${testingFolder}${id}`)
+        const testingFolder =
+            import.meta.env.MODE === 'test' || window.Cypress || import.meta.env.VITE_CLOUDINARY_FOLDER.includes('testing') ? '-testing' : ''
+        const imageRef = ref(db, `/images${testingFolder}/${id}`)
         set(imageRef, newImage)
             .then(() => {
                 toast({

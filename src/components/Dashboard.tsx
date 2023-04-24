@@ -3,12 +3,12 @@ import { useState } from 'react'
 import { Box, Button, Grid, HStack, Heading, useToast } from '@chakra-ui/react'
 import { signOut } from 'firebase/auth'
 
-import { ImageUploadForm } from '~/components/ImageUploadForm'
+import { ImageUploadForm } from '~/components/AdminImages/ImageUploadForm'
 import { auth } from '~/config/firebase'
 import { useSetUser } from '~/stores/UserStore'
+import { AdminImageList } from './AdminImages/AdminImageList'
 
 import { NOTIFICATION_DURATION } from '~/config/constants'
-import { AdminImageList } from './AdminImages/AdminImageList'
 import { MAIN_COLOUR } from '~/styles/customTheme'
 
 export const Dashboard = () => {

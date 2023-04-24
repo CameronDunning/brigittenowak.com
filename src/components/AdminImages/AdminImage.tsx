@@ -1,10 +1,12 @@
-import { HStack, Box, Text } from '@chakra-ui/react'
+import { Box, HStack, Icon, Text } from '@chakra-ui/react'
 
-import { ImageType } from '~/stores/ImagesStore'
+import { RxDragHandleDots2 } from 'react-icons/rx'
 import { MAIN_COLOUR } from '~/styles/customTheme'
+import { Image } from '~/types'
+import { Actions } from '~/components/AdminImages/Actions'
 
-type AdminImageProps = {
-    image: ImageType
+export type AdminImageProps = {
+    image: Image
 }
 
 export const AdminImage = ({ image }: AdminImageProps) => {
@@ -13,10 +15,13 @@ export const AdminImage = ({ image }: AdminImageProps) => {
 
     return (
         <HStack w="100%" justify="space-between" border={`1px solid ${MAIN_COLOUR}`} borderRadius={4}>
-            <Box w="14%" justifyContent="center" display="flex" py={1}>
-                <img src={croppedUrl} alt={image.title} style={styles.image} height="20px" />
+            <Box w="2%" h="17px">
+                <Icon as={RxDragHandleDots2} />
             </Box>
-            <Text textAlign="center" w="21%">
+            <Box w="12%" justifyContent="center" display="flex" py={1}>
+                <img src={croppedUrl} alt={image.title} style={styles.image} />
+            </Box>
+            <Text textAlign="center" w="21%" whiteSpace="nowrap" overflow="hidden" textOverflow="ellipsis">
                 {image.title}
             </Text>
             <Text textAlign="center" w="21%">
@@ -25,9 +30,9 @@ export const AdminImage = ({ image }: AdminImageProps) => {
             <Text textAlign="center" w="21%">
                 {image.dimensions}
             </Text>
-            <Text textAlign="center" w="21%">
-                Actions
-            </Text>
+            <Box w="21%">
+                <Actions image={image} />
+            </Box>
         </HStack>
     )
 }

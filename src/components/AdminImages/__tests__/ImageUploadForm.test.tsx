@@ -1,7 +1,22 @@
 import { fireEvent, render } from '@testing-library/react'
 import { expect, test, vi } from 'vitest'
 
+import { Image } from '~/types'
 import { ImageUploadForm } from '../ImageUploadForm'
+
+const testImage: Image = {
+    id: '1',
+    title: 'Test Title',
+    type: 'oils',
+    otherText: 'Test Other Text',
+    dimensions: 'Test Dimensions',
+    sold: true,
+    hidden: true,
+    deleted: false,
+    url: 'https://test.com',
+    width: 100,
+    height: 100,
+}
 
 test('renders ImageUploadForm without crashing', () => {
     const setShowForm = vi.fn()
@@ -48,6 +63,34 @@ test('fills out form', () => {
     fireEvent.change(dimensionsInput, { target: { value: 'Test Dimensions' } })
     fireEvent.click(soldCheckbox)
     fireEvent.click(hiddenCheckbox)
+
+    expect(titleInput).toHaveValue('Test Title')
+    expect(typeInput).toHaveValue('oils')
+    expect(otherTextInput).toHaveValue('Test Other Text')
+    expect(dimensionsInput).toHaveValue('Test Dimensions')
+    expect(soldCheckbox).toBeChecked()
+    expect(hiddenCheckbox).toBeChecked()
+})
+
+test('loads with an existing image', () => {
+    const setShowForm = vi.fn()
+
+    const { getByLabelText, getByText } = render(<ImageUploadForm setShowForm={setShowForm} image={testImage} />)
+
+    const titleInput = getByLabelText(/Title/)
+    expect(titleInput).toBeInTheDocument()
+    const typeInput = getByLabelText(/Type*/)
+    expect(typeInput).toBeInTheDocument()
+    const otherTextInput = getByLabelText(/Other Text/)
+    expect(otherTextInput).toBeInTheDocument()
+    const dimensionsInput = getByLabelText(/Dimensions/)
+    expect(dimensionsInput).toBeInTheDocument()
+    const soldCheckbox = getByLabelText(/Sold/)
+    expect(soldCheckbox).toBeInTheDocument()
+    const hiddenCheckbox = getByLabelText(/Hidden/)
+    expect(hiddenCheckbox).toBeInTheDocument()
+    const submitButton = getByText(/Submit/)
+    expect(submitButton).toBeInTheDocument()
 
     expect(titleInput).toHaveValue('Test Title')
     expect(typeInput).toHaveValue('oils')
