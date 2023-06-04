@@ -6,7 +6,7 @@ import { signOut } from 'firebase/auth'
 import { ImageUploadForm } from '~/components/AdminImages/ImageUploadForm'
 import { auth } from '~/config/firebase'
 import { useSetUser } from '~/stores/UserStore'
-import { AdminImageList } from './AdminImages/AdminImageList'
+import { AdminImages } from './AdminImages/AdminImages'
 
 import { NOTIFICATION_DURATION } from '~/config/constants'
 import { MAIN_COLOUR } from '~/styles/customTheme'
@@ -51,7 +51,7 @@ export const Dashboard = () => {
                 </Button>
             </HStack>
             {showForm && <ImageUploadForm setShowForm={setShowForm} />}
-            <AdminImageList />
+            <AdminImages />
         </Box>
     )
 }

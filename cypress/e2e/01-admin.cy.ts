@@ -79,5 +79,31 @@ describe('Admin functionality', () => {
 
         cy.contains('Image Submitted Successfully')
         longWait()
+        cy.contains('Test Photo')
+    })
+
+    it('will change the photo to Egg Tempera', () => {
+        login()
+
+        // Change the photo to Egg Tempera
+        cy.get('[data-test="edit-image-button"]').eq(0).click()
+        longWait()
+        cy.get('select[id="type"]').select('eggTempera')
+        cy.contains(/Submit/).click()
+        longWait()
+
+        // Check that the photo is now in Egg Tempera
+        cy.contains('Test Photo').should('not.exist')
+        cy.get('[data-test="type-selector"]').select('Egg Tempera')
+        cy.contains('Test Photo')
+    })
+
+    it('will delete the photo', () => {
+        login()
+
+        cy.get('[data-test="type-selector"]').select('Egg Tempera')
+        cy.get('[data-test="delete-image-button"]').click({ multiple: true })
+
+        cy.contains('Test Photo').should('not.exist')
     })
 })

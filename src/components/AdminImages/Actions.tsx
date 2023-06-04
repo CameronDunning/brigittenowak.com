@@ -28,9 +28,8 @@ export const Actions = ({ image }: AdminImageProps) => {
     const [isMobile] = useMediaQuery('(max-width: 768px)')
     const { isOpen, onOpen, onClose } = useDisclosure()
 
-    const testingFolder =
-        import.meta.env.MODE === 'test' || window.Cypress || import.meta.env.VITE_CLOUDINARY_FOLDER.includes('testing') ? '-testing' : ''
-    const imageRef = ref(db, `/images${testingFolder}/${image.id}`)
+    const folder = import.meta.env.MODE === 'test' || window.Cypress || import.meta.env.VITE_CLOUDINARY_FOLDER.includes('testing') ? '-testing' : ''
+    const imageRef = ref(db, `/images${folder}/${image.id}`)
 
     const toggleHidden = () => {
         set(imageRef, { ...image, hidden: !image.hidden })
@@ -98,6 +97,7 @@ export const Actions = ({ image }: AdminImageProps) => {
                                 p={0}
                                 m={0}
                                 onClick={onOpen}
+                                data-test="edit-image-button"
                             />
                             <IconButton
                                 aria-label="delete image"
@@ -106,6 +106,7 @@ export const Actions = ({ image }: AdminImageProps) => {
                                 p={0}
                                 m={0}
                                 onClick={markDeleted}
+                                data-test="delete-image-button"
                             />
                         </>
                     )}
