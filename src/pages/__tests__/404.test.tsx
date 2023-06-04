@@ -1,5 +1,6 @@
 import { render } from '@testing-library/react'
 import { BrowserRouter } from 'react-router-dom'
+import { expect, test } from 'vitest'
 
 import { NotFound } from '../404'
 
@@ -22,7 +23,7 @@ test('404 page renders correctly', () => {
 })
 
 test('404 page has the correct styling', () => {
-    const { getByRole, getByText } = render(
+    const { getByRole } = render(
         <BrowserRouter>
             <NotFound />
         </BrowserRouter>

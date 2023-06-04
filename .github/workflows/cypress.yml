@@ -1,0 +1,37 @@
+name: Run Cypress Tests
+on:
+    pull_request:
+        branches: [dev, main]
+jobs:
+    cypress-run:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v3
+            - uses: actions/setup-node@v3
+            - name: Write the cypress.env.json file 📝
+              run: |
+                  echo '${{ secrets.CYPRESS_ENV_CI }}' > ./cypress.env.json
+            - name: Install modules
+              run: npm ci
+            - name: Build production bundle
+              run: npm run build
+              env:
+                  VITE_FIREBASE_API_KEY: ${{ secrets.VITE_FIREBASE_API_KEY_DEV }}
+                  VITE_FIREBASE_AUTH_DOMAIN: ${{ secrets.VITE_FIREBASE_AUTH_DOMAIN_DEV }}
+                  VITE_FIREBASE_DATABASE_URL: ${{ secrets.VITE_FIREBASE_DATABASE_URL_DEV }}
+                  VITE_FIREBASE_PROJECT_ID: ${{ secrets.VITE_FIREBASE_PROJECT_ID_DEV }}
+                  VITE_FIREBASE_STORAGE_BUCKET: ${{ secrets.VITE_FIREBASE_STORAGE_BUCKET_DEV }}
+                  VITE_FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.VITE_FIREBASE_MESSAGING_SENDER_ID_DEV }}
+                  VITE_FIREBASE_APP_ID: ${{ secrets.VITE_FIREBASE_APP_ID_DEV }}
+                  VITE_CLOUDINARY_UPLOAD_BASE_URL: ${{ secrets.VITE_CLOUDINARY_UPLOAD_BASE_URL_DEV }}
+                  VITE_CLOUDINARY_IMAGE_BASE_URL: ${{ secrets.VITE_CLOUDINARY_IMAGE_BASE_URL_DEV }}
+                  VITE_CLOUDINARY_UPLOAD_PRESET: ${{ secrets.VITE_CLOUDINARY_UPLOAD_PRESET_TESTING }}
+                  VITE_CLOUDINARY_FOLDER: ${{ secrets.VITE_CLOUDINARY_FOLDER_TESTING }}
+            - name: Cypress
+              uses: cypress-io/github-action@v4
+              with:
+                  browser: chrome
+                  install: false
+                  start: npx serve -s dist -p 5173 --no-request-logging
+                  wait-on: http://localhost:5173

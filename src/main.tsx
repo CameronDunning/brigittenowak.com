@@ -1,12 +1,13 @@
 import React from 'react'
 
-import ReactDOM from 'react-dom/client'
 import { ChakraProvider } from '@chakra-ui/react'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import ReactDOM from 'react-dom/client'
 import { HelmetProvider } from 'react-helmet-async'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
 import { Layout } from '~/components/Layout'
 import { NotFound } from '~/pages/404'
+import { Admin } from '~/pages/Admin'
 import { Home } from '~/pages/Home'
 import { theme } from '~/styles/customTheme'
 
@@ -16,6 +17,7 @@ const ROUTER = createBrowserRouter([
         element: <Layout />,
         children: [
             { path: '/', element: <Home /> },
+            { path: '/admin', element: <Admin /> },
             { path: '*', element: <NotFound /> },
         ],
         errorElement: <NotFound />,
