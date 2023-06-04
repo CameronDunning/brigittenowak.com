@@ -29,7 +29,7 @@ test('renders NavBar links', () => {
         </BrowserRouter>
     )
     const about = getByText(/About/)
-    const images = getByText(/Images/)
+    const images = getByText(/Artwork/)
     const representation = getByText(/Representation/)
     const contact = getByText(/Contact/)
     expect(about).toBeInTheDocument()
@@ -47,7 +47,7 @@ test('toggles dropdown menu when hamburger icon is clicked', () => {
     const hamburger = getByLabelText('Open Menu')
     fireEvent.click(hamburger)
     const about = getAllByText(/About/)
-    const images = getAllByText(/Images/)
+    const images = getAllByText(/Artwork/)
     const representation = getAllByText(/Representation/)
     const contact = getAllByText(/Contact/)
     expect(about.length).toBe(2)
