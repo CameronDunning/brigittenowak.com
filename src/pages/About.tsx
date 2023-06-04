@@ -4,7 +4,7 @@ import { Box, Flex, Heading, Link, Text } from '@chakra-ui/react'
 export const About = () => {
     return (
         <Flex as="main" w={{ base: '100%', md: '4xl' }} flexDirection="column">
-            <Box as="section" pb={12}>
+            <Box as="section" pb={12} px={{ base: 2, md: 0 }}>
                 <Heading pb={2}>About Brigitte Nowak</Heading>
                 <Text fontWeight="bold" pb={2}>
                     Brigitte Nowak was born in Germany, grew up in Cambridge, Ontario and graduated from the University of Guelph, Ontario in Fine
@@ -26,7 +26,7 @@ export const About = () => {
                     Brigitte Nowak's CV
                 </Link>
             </Box>
-            <Box as="section" pb={12}>
+            <Box as="section" pb={12} px={{ base: 2, md: 0 }}>
                 <Heading pb={2}>About Egg Tempera</Heading>
                 <Text fontWeight="bold" pb={2}>
                     Egg tempera has been used as a painting medium since ancient times, and was in common use prior to the invention of oil paint.
@@ -37,7 +37,7 @@ export const About = () => {
                     applications are also possible.
                 </Text>
             </Box>
-            <Box as="section" pb={12}>
+            <Box as="section" pb={12} px={{ base: 2, md: 0 }}>
                 <Heading pb={2}>About serigraphs (also known as screenprints)</Heading>
                 <Text fontWeight="bold" pb={2}>
                     Serigraphs are limited edition prints made using the screenprinting process, which is also commonly used for commercial purposes.

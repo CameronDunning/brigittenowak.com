@@ -27,10 +27,9 @@ export const Layout = () => {
     useEffect(() => {
         const folder = import.meta.env.VITE_CLOUDINARY_FOLDER.includes('testing') ? '-testing' : ''
         const imagesRef = ref(db, `/images${folder}/`)
-        onValue(imagesRef, snapshot => {
+        return onValue(imagesRef, snapshot => {
             const imageSnapshot = snapshot.val()
-            delete imageSnapshot.testing
-            setImages(imageSnapshot)
+            setImages(Object.values(imageSnapshot))
         })
     }, [])
 

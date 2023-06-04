@@ -84,6 +84,7 @@ export const ImageUploadForm = ({ setShowForm, image }: ImageUploadFormProps) =>
             dimensions,
             sold,
             hidden,
+            deleted: false,
             url,
             width,
             height,

@@ -15,11 +15,3 @@ export type Image = {
     height: number
     width: number
 }
-
-export type Images = {
-    [key: string]: Image
-}
-
-export type CategorizedImages = {
-    [key in TypeOptions]: Images
-}
