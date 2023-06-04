@@ -9,6 +9,10 @@ import { Layout } from '~/components/Layout'
 import { NotFound } from '~/pages/404'
 import { Admin } from '~/pages/Admin'
 import { Home } from '~/pages/Home'
+import { About } from '~/pages/About'
+import { Resume } from '~/pages/Resume'
+import { Representation } from './pages/Representation'
+import { Contact } from './pages/Contact'
 import { theme } from '~/styles/customTheme'
 
 const ROUTER = createBrowserRouter([
@@ -18,6 +22,10 @@ const ROUTER = createBrowserRouter([
         children: [
             { path: '/', element: <Home /> },
             { path: '/admin', element: <Admin /> },
+            { path: '/about', element: <About /> },
+            { path: '/resume', element: <Resume /> },
+            { path: '/representation', element: <Representation /> },
+            { path: '/contact', element: <Contact /> },
             { path: '*', element: <NotFound /> },
         ],
         errorElement: <NotFound />,
