@@ -13,6 +13,8 @@ import { About } from '~/pages/About'
 import { Resume } from '~/pages/Resume'
 import { Representation } from './pages/Representation'
 import { Contact } from './pages/Contact'
+import { Artwork } from './pages/Artwork'
+import { ArtworkType } from './pages/ArtworkType'
 import { theme } from '~/styles/customTheme'
 
 const ROUTER = createBrowserRouter([
@@ -26,6 +28,8 @@ const ROUTER = createBrowserRouter([
             { path: '/resume', element: <Resume /> },
             { path: '/representation', element: <Representation /> },
             { path: '/contact', element: <Contact /> },
+            { path: '/artwork', element: <Artwork /> },
+            { path: '/artwork/:type', element: <ArtworkType /> },
             { path: '*', element: <NotFound /> },
         ],
         errorElement: <NotFound />,

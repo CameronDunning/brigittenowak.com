@@ -20,13 +20,14 @@
         "firebase": "^9.19.1",
         "framer-motion": "^10.11.6",
         "react": "^18.2.0",
+        "react-beautiful-dnd": "^13.1.1",
         "react-dom": "^18.2.0",
         "react-helmet-async": "^1.3.0",
         "react-icons": "^4.8.0",
-        "react-photo-album": "^2.0.3",
+        "react-photo-album": "^2.2.2",
         "react-router-dom": "^6.10.0",
         "uuid": "^9.0.0",
-        "yet-another-react-lightbox": "^2.6.1",
+        "yet-another-react-lightbox": "^2.6.2",
         "zustand": "^4.3.7"
     },
     "devDependencies": {
