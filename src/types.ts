@@ -15,3 +15,5 @@ export type Image = {
     height: number
     width: number
 }
+
+export type ImageOrder = string[]
