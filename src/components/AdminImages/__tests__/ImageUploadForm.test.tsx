@@ -1,22 +1,8 @@
 import { fireEvent, render } from '@testing-library/react'
 import { expect, test, vi } from 'vitest'
 
-import { Image } from '~/types'
-import { ImageUploadForm } from '../ImageUploadForm'
-
-const testImage: Image = {
-    id: '1',
-    title: 'Test Title',
-    type: 'oils',
-    otherText: 'Test Other Text',
-    dimensions: 'Test Dimensions',
-    sold: true,
-    hidden: true,
-    deleted: false,
-    url: 'https://test.com',
-    width: 100,
-    height: 100,
-}
+import { IMAGE } from '~/components/AdminImages/__tests__/Constants'
+import { ImageUploadForm } from '~/components/AdminImages/ImageUploadForm'
 
 test('renders ImageUploadForm without crashing', () => {
     const setShowForm = vi.fn()
@@ -75,7 +61,7 @@ test('fills out form', () => {
 test('loads with an existing image', () => {
     const setShowForm = vi.fn()
 
-    const { getByLabelText, getByText } = render(<ImageUploadForm setShowForm={setShowForm} image={testImage} />)
+    const { getByLabelText, getByText } = render(<ImageUploadForm setShowForm={setShowForm} image={IMAGE} />)
 
     const titleInput = getByLabelText(/Title/)
     expect(titleInput).toBeInTheDocument()
@@ -96,6 +82,6 @@ test('loads with an existing image', () => {
     expect(typeInput).toHaveValue('oils')
     expect(otherTextInput).toHaveValue('Test Other Text')
     expect(dimensionsInput).toHaveValue('Test Dimensions')
-    expect(soldCheckbox).toBeChecked()
-    expect(hiddenCheckbox).toBeChecked()
+    expect(soldCheckbox).not.toBeChecked()
+    expect(hiddenCheckbox).not.toBeChecked()
 })

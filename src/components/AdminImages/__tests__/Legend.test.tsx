@@ -1,7 +1,7 @@
 import { expect, test, vi } from 'vitest'
 import { render } from '@testing-library/react'
 
-import { Legend } from '../Legend'
+import { Legend } from '~/components/AdminImages/Legend'
 
 // https://jestjs.io/docs/manual-mocks#mocking-methods-which-are-not-implemented-in-jsdom
 Object.defineProperty(window, 'matchMedia', {

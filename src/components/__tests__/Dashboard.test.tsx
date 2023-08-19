@@ -1,7 +1,7 @@
 import { fireEvent, render } from '@testing-library/react'
 import { expect, test, vi } from 'vitest'
 
-import { Dashboard } from '../Dashboard'
+import { Dashboard } from '~/components/Dashboard'
 
 // https://jestjs.io/docs/manual-mocks#mocking-methods-which-are-not-implemented-in-jsdom
 Object.defineProperty(window, 'matchMedia', {

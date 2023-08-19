@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react'
 import { expect, test } from 'vitest'
 
-import { Admin } from '../Admin'
+import { Admin } from '~/pages/Admin'
 
 test('Admin page renders correctly', () => {
     const { getByText } = render(<Admin />)

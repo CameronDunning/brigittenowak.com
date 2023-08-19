@@ -1,8 +1,8 @@
-import { expect, test, vi } from 'vitest'
 import { render } from '@testing-library/react'
-import { Image } from '~/types'
+import { expect, test, vi } from 'vitest'
 
-import { AdminImage } from '../AdminImage'
+import { IMAGE } from '~/components/AdminImages/__tests__/Constants'
+import { AdminImage } from '~/components/AdminImages/AdminImage'
 
 // https://jestjs.io/docs/manual-mocks#mocking-methods-which-are-not-implemented-in-jsdom
 Object.defineProperty(window, 'matchMedia', {
@@ -19,26 +19,12 @@ Object.defineProperty(window, 'matchMedia', {
     })),
 })
 
-const testImage: Image = {
-    id: '1',
-    title: 'Test title',
-    type: 'oils',
-    otherText: '',
-    dimensions: '',
-    sold: false,
-    hidden: false,
-    deleted: false,
-    url: 'https://test.com',
-    width: 100,
-    height: 100,
-}
-
 test('renders Legend without crashing', () => {
-    render(<AdminImage image={testImage} />)
+    render(<AdminImage image={IMAGE} />)
 })
 
 test('renders the image', () => {
-    const { getByRole } = render(<AdminImage image={testImage} />)
+    const { getByRole } = render(<AdminImage image={IMAGE} />)
 
     expect(getByRole('img')).toBeInTheDocument()
 })

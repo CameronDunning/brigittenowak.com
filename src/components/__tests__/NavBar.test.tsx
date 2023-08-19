@@ -2,7 +2,7 @@ import { fireEvent, render } from '@testing-library/react'
 import { BrowserRouter } from 'react-router-dom'
 import { expect, test } from 'vitest'
 
-import { NavBar } from '../NavBar'
+import { NavBar } from '~/components/NavBar'
 
 test('renders NavBar without crashing', () => {
     render(

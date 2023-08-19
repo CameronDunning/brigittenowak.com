@@ -1,8 +1,8 @@
 import { expect, test, vi } from 'vitest'
 import { render } from '@testing-library/react'
 
-import { Actions } from '../Actions'
-import { Image } from '~/types'
+import { Actions } from '~/components/AdminImages/Actions'
+import { IMAGE } from '~/components/AdminImages/__tests__/Constants'
 
 // https://jestjs.io/docs/manual-mocks#mocking-methods-which-are-not-implemented-in-jsdom
 Object.defineProperty(window, 'matchMedia', {
@@ -19,26 +19,12 @@ Object.defineProperty(window, 'matchMedia', {
     })),
 })
 
-const testImage: Image = {
-    id: '1',
-    title: 'Test title',
-    type: 'oils',
-    otherText: '',
-    dimensions: '',
-    sold: false,
-    hidden: false,
-    deleted: false,
-    url: 'https://test.com',
-    width: 100,
-    height: 100,
-}
-
 test('renders Actions without crashing', () => {
-    render(<Actions image={testImage} />)
+    render(<Actions image={IMAGE} />)
 })
 
 test('renders Actions with correct buttons', () => {
-    const { getAllByRole, getByLabelText } = render(<Actions image={testImage} />)
+    const { getAllByRole, getByLabelText } = render(<Actions image={IMAGE} />)
 
     const buttons = getAllByRole('button')
     expect(buttons).toHaveLength(4)
@@ -51,7 +37,7 @@ test('renders Actions with correct buttons', () => {
 })
 
 test('renders Actions with correct buttons when image is sold', () => {
-    const { getAllByRole, getByLabelText } = render(<Actions image={{ ...testImage, sold: true }} />)
+    const { getAllByRole, getByLabelText } = render(<Actions image={{ ...IMAGE, sold: true }} />)
 
     const buttons = getAllByRole('button')
     expect(buttons).toHaveLength(4)
@@ -61,7 +47,7 @@ test('renders Actions with correct buttons when image is sold', () => {
 })
 
 test('renders Actions with correct buttons when image is hidden', () => {
-    const { getAllByRole, getByLabelText } = render(<Actions image={{ ...testImage, hidden: true }} />)
+    const { getAllByRole, getByLabelText } = render(<Actions image={{ ...IMAGE, hidden: true }} />)
 
     const buttons = getAllByRole('button')
     expect(buttons).toHaveLength(4)
