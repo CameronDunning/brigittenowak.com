@@ -1,14 +1,14 @@
 import { useEffect } from 'react'
 
 import { Stack } from '@chakra-ui/react'
-import { Outlet } from 'react-router-dom'
 import { onValue, ref } from 'firebase/database'
+import { Outlet } from 'react-router-dom'
 
-import { auth, db } from '~/config/firebase'
-import { useSetUser } from '~/stores/UserStore'
 import { Footer } from '~/components/Footer'
 import { NavBar } from '~/components/NavBar'
+import { auth, db } from '~/config/firebase'
 import { useSetImages } from '~/stores/ImagesStore'
+import { useSetUser } from '~/stores/UserStore'
 
 export const Layout = () => {
     const setUser = useSetUser()
@@ -27,6 +27,7 @@ export const Layout = () => {
     useEffect(() => {
         const folder = import.meta.env.VITE_CLOUDINARY_FOLDER.includes('testing') ? '-testing' : ''
         const imagesRef = ref(db, `/images${folder}/`)
+
         return onValue(imagesRef, snapshot => {
             const imageSnapshot = snapshot.val()
             setImages(Object.values(imageSnapshot))

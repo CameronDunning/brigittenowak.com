@@ -21,12 +21,15 @@ import { MdOutlineDeleteForever } from 'react-icons/md'
 import { TiPencil } from 'react-icons/ti'
 
 import { db } from '~/config/firebase'
-import { AdminImageProps } from './AdminImage'
-import { ImageUploadForm } from './ImageUploadForm'
+import { ImageUploadForm } from '~/components/AdminImages/ImageUploadForm'
+import { useImages } from '~/stores/ImagesStore'
+import { Image } from '~/types'
 
-export const Actions = ({ image }: AdminImageProps) => {
+export const Actions = ({ image }: { image: Image }) => {
     const [isMobile] = useMediaQuery('(max-width: 768px)')
     const { isOpen, onOpen, onClose } = useDisclosure()
+
+    const images = useImages()
 
     const folder = import.meta.env.MODE === 'test' || window.Cypress || import.meta.env.VITE_CLOUDINARY_FOLDER.includes('testing') ? '-testing' : ''
     const imageRef = ref(db, `/images${folder}/${image.id}`)
@@ -40,7 +43,13 @@ export const Actions = ({ image }: AdminImageProps) => {
     }
 
     const markDeleted = () => {
-        set(imageRef, { ...image, deleted: true })
+        set(imageRef, { ...image, deleted: true, order: -1 })
+
+        // Change the order of all the images of the same type
+        const imagesOfType = images.filter(i => i.type === image.type && i.order > image.order)
+        imagesOfType.forEach(i => {
+            set(ref(db, `/images${folder}/${i.id}`), { ...i, order: i.order - 1 })
+        })
     }
 
     return (

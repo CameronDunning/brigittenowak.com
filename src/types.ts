@@ -14,6 +14,5 @@ export type Image = {
     hidden: boolean
     height: number
     width: number
+    order: number
 }
-
-export type ImageOrder = string[]
