@@ -102,7 +102,7 @@ export const ImageUploadForm = ({ setShowForm, image }: ImageUploadFormProps) =>
         const lastImage = images
             .filter(image => image.type === type)
             .sort((a, b) => a.order - b.order)
-            .slice(-1)[0]
+            .slice(-1)[0] || { order: 0 }
 
         // If we are editing an image, check if the type has changed
         // If the type hasn't changed, we need to keep the order the same
