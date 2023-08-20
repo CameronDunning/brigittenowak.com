@@ -1,4 +1,4 @@
-import { expect, test, vi } from 'vitest'
+import { expect, test, vi, afterEach } from 'vitest'
 import { render } from '@testing-library/react'
 
 import { AdminImageList } from '~/components/AdminImages/AdminImageList'
@@ -66,6 +66,10 @@ const images: Image[] = [
         width: 390,
     },
 ]
+
+afterEach(() => {
+    ImagesStore.setState({ images: [] })
+})
 
 test('renders AdminImageList without crashing', () => {
     ImagesStore.setState({ images })
