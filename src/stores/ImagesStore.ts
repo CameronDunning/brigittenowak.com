@@ -7,7 +7,7 @@ type ImageStoreState = {
     setImages: (images: Image[]) => void
 }
 
-const ImagesStore = create<ImageStoreState>()(set => ({
+export const ImagesStore = create<ImageStoreState>()(set => ({
     images: [],
     setImages: images => {
         const newImages = images.filter(image => !image.deleted)
