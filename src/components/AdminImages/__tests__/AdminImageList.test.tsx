@@ -1,5 +1,6 @@
 import { expect, test, vi, afterEach } from 'vitest'
-import { render } from '@testing-library/react'
+import { getByText, render, screen } from '@testing-library/react'
+import { DragDropContext } from 'react-beautiful-dnd'
 
 import { AdminImageList } from '~/components/AdminImages/AdminImageList'
 import { OILS } from '~/config/constants'
@@ -33,6 +34,20 @@ const images: Image[] = [
         otherText: 'other text',
         sold: false,
         title: 'Snow profiles',
+        type: 'oils',
+        url: 'http://res.cloudinary.com/di2dfqt1l/image/upload/v1692419978/brigittenowak_com-dev/00985b29-9d3c-4b92-909a-2d5f859e9663.png',
+        width: 1844,
+    },
+    {
+        deleted: false,
+        dimensions: '24" x 36"',
+        height: 1015,
+        hidden: false,
+        id: '00985b29-9d3c-4b92-909a-2d5f859e9664',
+        order: 3,
+        otherText: 'other text 2',
+        sold: false,
+        title: 'something else',
         type: 'oils',
         url: 'http://res.cloudinary.com/di2dfqt1l/image/upload/v1692419978/brigittenowak_com-dev/00985b29-9d3c-4b92-909a-2d5f859e9663.png',
         width: 1844,
@@ -78,10 +93,14 @@ test('renders AdminImageList without crashing', () => {
 })
 
 // Test that only one image is shown
-test('renders only one image', () => {
+test('renders only one image', async () => {
     ImagesStore.setState({ images })
 
-    const { container } = render(<AdminImageList type={OILS} />)
+    const { container } = await render(
+        // <DragDropContext onDragEnd={() => {}}>
+        <AdminImageList type={OILS} />
+        // </DragDropContext>
+    )
 
     expect(container.querySelectorAll('img')).toHaveLength(1)
 })
@@ -92,6 +111,6 @@ test('renders image title', () => {
 
     const { getByText, queryByText } = render(<AdminImageList type={OILS} />)
 
-    expect(getByText('Snow profiles')).toBeInTheDocument()
+    expect(queryByText('Snow profiles')).toBeInTheDocument()
     expect(queryByText('Oil test')).not.toBeInTheDocument()
 })

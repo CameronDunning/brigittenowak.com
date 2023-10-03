@@ -30,7 +30,7 @@ export const Layout = () => {
 
         return onValue(imagesRef, snapshot => {
             const imageSnapshot = snapshot.val()
-            setImages(Object.values(imageSnapshot))
+            setImages(imageSnapshot)
         })
     }, [])
 

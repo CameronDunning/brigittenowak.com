@@ -16,3 +16,5 @@ export type Image = {
     width: number
     order: number
 }
+
+export type ImagesObject = { [key: string]: Image }

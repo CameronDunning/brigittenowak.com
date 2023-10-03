@@ -22,9 +22,9 @@ import { v4 } from 'uuid'
 
 import { DISPLAY_TYPES_MAP, TYPES } from '~/config/constants'
 import { db } from '~/config/firebase'
+import { useImages } from '~/stores/ImagesStore'
 import { useUser } from '~/stores/UserStore'
 import { Image } from '~/types'
-import { useImages } from '~/stores/ImagesStore'
 
 type ImageUploadFormProps = {
     setShowForm: (showForm: boolean) => void
