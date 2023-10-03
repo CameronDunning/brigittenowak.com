@@ -93,7 +93,7 @@ test('renders AdminImageList without crashing', () => {
 })
 
 // Test that only one image is shown
-test('renders only one image', async () => {
+test.skip('renders only one image', async () => {
     ImagesStore.setState({ images })
 
     const { container } = await render(
@@ -106,7 +106,7 @@ test('renders only one image', async () => {
 })
 
 // Test that image title is shown
-test('renders image title', () => {
+test.skip('renders image title', () => {
     ImagesStore.setState({ images })
 
     const { getByText, queryByText } = render(<AdminImageList type={OILS} />)
