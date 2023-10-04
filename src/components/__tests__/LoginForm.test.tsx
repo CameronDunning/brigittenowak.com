@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react'
 import { expect, test } from 'vitest'
 
-import { LoginForm } from '../LoginForm'
+import { LoginForm } from '~/components/LoginForm'
 
 test('renders LoginForm without crashing', () => {
     render(<LoginForm />)

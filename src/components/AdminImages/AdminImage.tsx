@@ -5,16 +5,12 @@ import { MAIN_COLOUR } from '~/styles/customTheme'
 import { Image } from '~/types'
 import { Actions } from '~/components/AdminImages/Actions'
 
-export type AdminImageProps = {
-    image: Image
-}
-
-export const AdminImage = ({ image }: AdminImageProps) => {
+export const AdminImage = ({ image }: { image: Image; ref?: any }) => {
     const croppedUrl =
         import.meta.env.VITE_CLOUDINARY_IMAGE_BASE_URL + '/w_200,h_80,c_limit' + import.meta.env.VITE_CLOUDINARY_FOLDER + '/' + image.id
 
     return (
-        <HStack w="100%" justify="space-between" border={`1px solid ${MAIN_COLOUR}`} borderRadius={4}>
+        <HStack w="100%" mb={2} justify="space-between" border={`1px solid ${MAIN_COLOUR}`} borderRadius={4}>
             <Box w="2%" h="17px">
                 <Icon as={RxDragHandleDots2} />
             </Box>

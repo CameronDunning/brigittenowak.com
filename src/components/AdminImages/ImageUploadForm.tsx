@@ -22,6 +22,7 @@ import { v4 } from 'uuid'
 
 import { DISPLAY_TYPES_MAP, TYPES } from '~/config/constants'
 import { db } from '~/config/firebase'
+import { useImages } from '~/stores/ImagesStore'
 import { useUser } from '~/stores/UserStore'
 import { Image } from '~/types'
 
@@ -40,6 +41,7 @@ export const ImageUploadForm = ({ setShowForm, image }: ImageUploadFormProps) =>
     const toast = useToast()
 
     const user = useUser()
+    const images = useImages()
 
     // Form state
     const [title, setTitle] = useState(image?.title || '')
@@ -76,6 +78,38 @@ export const ImageUploadForm = ({ setShowForm, image }: ImageUploadFormProps) =>
 
         setIsSaving(true)
 
+        // If we are editing an image, check if the type has changed
+        // If it has, we need to adjust the order of all the images in the old type
+        const oldImage = images.find(image => image.id === id)
+        if (oldImage && oldImage.type !== type) {
+            // Remove the old image from the old type and update the order of the old type
+            const oldTypeImages = images.filter(image => image.type === oldImage.type)
+            const oldTypeImagesToBeChanged = oldTypeImages
+                .filter(image => image.order > oldImage.order)
+                .map(image => ({
+                    ...image,
+                    order: image.order - 1,
+                }))
+
+            // Bulk update all the images of the old type
+            oldTypeImagesToBeChanged.forEach(image => {
+                const imageRef = ref(db, `/images/${image.id}`)
+                set(imageRef, image)
+            })
+        }
+
+        // get the order of the last Image
+        const lastImage = images
+            .filter(image => image.type === type)
+            .sort((a, b) => a.order - b.order)
+            .slice(-1)[0] || { order: 0 }
+
+        // If we are editing an image, check if the type has changed
+        // If the type hasn't changed, we need to keep the order the same
+        // If the type has changed, we add it to the end of the new type
+        // If we're not editing an image, we add it to the end of the new type
+        const newOrder = oldImage ? (oldImage.type === type ? oldImage.order : lastImage.order + 1) : lastImage.order + 1
+
         const newImage = {
             id,
             title,
@@ -88,6 +122,7 @@ export const ImageUploadForm = ({ setShowForm, image }: ImageUploadFormProps) =>
             url,
             width,
             height,
+            order: newOrder,
         }
 
         // Add to realtime database
