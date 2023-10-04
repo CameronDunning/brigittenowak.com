@@ -1,24 +1,25 @@
 import { useMemo, useState } from 'react'
 
-import { useParams } from 'react-router-dom'
-import { Heading, VStack, Box, Flex, Text } from '@chakra-ui/react'
+import { Box, Flex, Heading, Text, VStack } from '@chakra-ui/react'
 import { FaCircle } from 'react-icons/fa'
 import { PhotoAlbum, RenderPhoto } from 'react-photo-album'
+import { useParams } from 'react-router-dom'
+import Lightbox from 'yet-another-react-lightbox'
 import Captions from 'yet-another-react-lightbox/plugins/captions'
 import Thumbnails from 'yet-another-react-lightbox/plugins/thumbnails'
-import Lightbox from 'yet-another-react-lightbox'
 
-import 'yet-another-react-lightbox/styles.css'
+import { DISPLAY_TYPES_MAP } from '~/config/constants'
+import { useImages } from '~/stores/ImagesStore'
+import { Image, TypeOptions } from '~/types'
+
 import 'yet-another-react-lightbox/plugins/captions.css'
 import 'yet-another-react-lightbox/plugins/thumbnails.css'
-
-import { useImages } from '~/stores/ImagesStore'
-import { Image } from '~/types'
+import 'yet-another-react-lightbox/styles.css'
 
 const BREAKPOINTS = [3840, 2400, 1080, 640, 384, 256, 128, 96, 64, 48]
 
 export const ArtworkType = () => {
-    const { type } = useParams<{ type: string }>()
+    const { type } = useParams<{ type: TypeOptions }>()
 
     const images = useImages()
     const typeImages = images.filter(image => image.type === type)
@@ -72,7 +73,7 @@ export const ArtworkType = () => {
     return (
         <>
             <VStack w={{ base: '100%', md: '4xl' }}>
-                <Heading alignSelf="flex-start">Oils</Heading>
+                {type && <Heading alignSelf="flex-start">{DISPLAY_TYPES_MAP[type]}</Heading>}
                 <Box w={['100%', null, null, '4xl']} p={2} pt={5}>
                     <PhotoAlbum
                         photos={formattedImages}
