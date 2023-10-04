@@ -11,6 +11,7 @@ import Thumbnails from 'yet-another-react-lightbox/plugins/thumbnails'
 import { DISPLAY_TYPES_MAP } from '~/config/constants'
 import { useImages } from '~/stores/ImagesStore'
 import { Image, TypeOptions } from '~/types'
+import { NotFound } from './404'
 
 import 'yet-another-react-lightbox/plugins/captions.css'
 import 'yet-another-react-lightbox/plugins/thumbnails.css'
@@ -22,13 +23,12 @@ export const ArtworkType = () => {
     const { type } = useParams<{ type: TypeOptions }>()
 
     const images = useImages()
-    const typeImages = images.filter(image => image.type === type)
+    const typeImages = images.filter(image => image.type === type).sort((a, b) => a.order - b.order)
 
     const [index, setIndex] = useState(-1)
 
     const formattedImages = useMemo(() => {
         return typeImages.map(image => {
-            console.log('image', image)
             const width = BREAKPOINTS[0]
             const height = Math.floor(width * (image.height / image.width))
 
@@ -69,6 +69,11 @@ export const ArtworkType = () => {
             }
         })
     }, [typeImages])
+
+    // Check that type is valid
+    if (!type || !DISPLAY_TYPES_MAP[type]) {
+        return <NotFound />
+    }
 
     return (
         <>
