@@ -23,7 +23,7 @@ export const ArtworkType = () => {
     const { type } = useParams<{ type: TypeOptions }>()
 
     const images = useImages()
-    const typeImages = images.filter(image => image.type === type).sort((a, b) => a.order - b.order)
+    const typeImages = images.filter(image => image.type === type && image.hidden !== true).sort((a, b) => a.order - b.order)
 
     const [index, setIndex] = useState(-1)
 
@@ -78,7 +78,11 @@ export const ArtworkType = () => {
     return (
         <>
             <VStack w={{ base: '100%', md: '4xl' }}>
-                {type && <Heading alignSelf="flex-start">{DISPLAY_TYPES_MAP[type]}</Heading>}
+                {type && (
+                    <Heading ml={2} alignSelf="flex-start">
+                        {DISPLAY_TYPES_MAP[type]}
+                    </Heading>
+                )}
                 <Box w={['100%', null, null, '4xl']} p={2} pt={5}>
                     <PhotoAlbum
                         photos={formattedImages}
