@@ -44,7 +44,7 @@ const ArtType = ({ type }: ArtTypeProps) => {
                     <Link as={RouterLink} to={`/artwork/${type}`}>
                         <Image
                             w="100%"
-                            src={`${import.meta.env.VITE_CLOUDINARY_IMAGE_BASE_URL}/v1/${import.meta.env.VITE_CLOUDINARY_FOLDER}/${type}`}
+                            src={`${import.meta.env.VITE_CLOUDINARY_IMAGE_BASE_URL}/v1/${import.meta.env.VITE_CLOUDINARY_FOLDER}/${type}.jpg`}
                             alt="Oils"
                         />
                     </Link>
