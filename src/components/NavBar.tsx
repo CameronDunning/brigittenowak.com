@@ -11,7 +11,7 @@ type NavLinkProps = {
 const links = ['About', 'Artwork', 'Representation', 'Contact']
 
 const NavLink = ({ children }: NavLinkProps) => (
-    <Link pl={{ base: 2, md: 0 }} href={`/${children.toLowerCase()}`}>
+    <Link as={RouterLink} pl={{ base: 2, md: 0 }} href={`/${children.toLowerCase()}`}>
         {children}
     </Link>
 )
