@@ -6,9 +6,9 @@ export const Resume = () => {
             <Box as="section" pb={12}>
                 <Heading pb={2}>Select Solo Exhibitions</Heading>
                 <UnorderedList>
-                    <ListItem>2018 Sentient Beings, Liberty Village, Toronto</ListItem>
-                    <ListItem>2017 “The Idea of Summer” June, Latitude 44 Gallery, Toronto </ListItem>
-                    <ListItem>2016 “Sign, Sign, Everywhere a Sign” (March-May) Roastery, 401 Richmond, Toronto </ListItem>
+                    <ListItem>2018 “Sentient Beings” Liberty Market Lofts, 5 Hanna, Toronto October/November, 2018</ListItem>
+                    <ListItem>2017 “The Idea of Summer” Latitude 44 Gallery, Toronto, June</ListItem>
+                    <ListItem>2016 “Signs, Signs, Everywhere a Sign” Roastery, 401 Richmond, (March-May) </ListItem>
                     <ListItem>2014 “CANOE” October 16 – Nov. 13, Latitude 44 Gallery, Toronto </ListItem>
                     <ListItem>2007-8 “Out/Of Place” Cambridge Galleries (Preston) Dec. 8 – Jan 20, 2008 </ListItem>
                     <ListItem>2006 HangMan Gallery, Toronto, Ontario (Jan. 17 – Feb. 5, 2006) </ListItem>
