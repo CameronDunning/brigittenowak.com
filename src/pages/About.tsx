@@ -1,30 +1,35 @@
 import { Link as RouterLink } from 'react-router-dom'
-import { Box, Flex, Heading, Link, Text } from '@chakra-ui/react'
+import { Box, Flex, Grid, GridItem, Heading, Link, Text, Image } from '@chakra-ui/react'
 
 export const About = () => {
     return (
         <Flex as="main" w={{ base: '100%', md: '4xl' }} flexDirection="column">
             <Box as="section" pb={12} px={{ base: 2, md: 0 }}>
-                <Heading pb={2}>About Brigitte Nowak</Heading>
-                <Text fontWeight="bold" pb={2}>
-                    Brigitte Nowak was born in Germany, grew up in Cambridge, Ontario and graduated from the University of Guelph, Ontario in Fine
-                    Art. She lives in Toronto and spends summers on an island in Georgian Bay. Image-making, as a quest to understand and reveal the
-                    world around her and her role in it, has been a cornerstone of her life as far back as she can remember.
-                </Text>
-                <Text fontWeight="bold" pb={2}>
-                    Her realist landscapes and figurative works explore the nature of reality and illusion, the interaction between the human and
-                    natural worlds, and the line between observation and comment. Of ongoing interest is that most Canadian of icons, the canoe, for
-                    its form and for its symbolic allusions, the emerging self-awareness of children and adolescents, and the places that define our
-                    lives.
-                </Text>
-                <Text fontWeight="bold" pb={2}>
-                    Brigitte Nowak has had several solo exhibitions and has participated in numerous group and juried shows in both Canada and the
-                    United States. Her work has been used as the signature piece for Toronto’s Riverdale Art Walk, the Project CANOE charitable
-                    organization and was chosen one of the "Top Ten" in the 2009 Royal Agricultural Winter Fair's Fine Art Showcase.
-                </Text>
-                <Link as={RouterLink} to="/resume" textDecoration="underline" fontWeight="bold" pb={2}>
-                    Brigitte Nowak's CV
-                </Link>
+                <Grid templateColumns={{ base: '1fr', md: '1fr 1fr' }} gap={4}>
+                    <GridItem>
+                        <Image
+                            w={{ base: '100%', md: '4xl' }}
+                            src="https://res.cloudinary.com/di2dfqt1l/image/upload/v1712805762/brigittenowak_com/profile_picture.jpg"
+                            alt="Red Canoe"
+                        />
+                    </GridItem>
+                    <GridItem>
+                        <Heading pb={2}>About Brigitte Nowak</Heading>
+                        <Text fontWeight="bold" pb={2}>
+                            Brigitte Nowak lives in Toronto, and spends summers on an island in Georgian Bay. Image making, to understand and reveal
+                            the world around her, has always been part of her life.
+                        </Text>
+                        <Text fontWeight="bold" pb={2}>
+                            Her paintings, mostly in in oils, explore the nature of reality and illusion, the interface between the human and natural
+                            worlds, and the line between observation and comment. Her work, included in private and corporate collections, has won
+                            awards in both Canada and the U.S. She has been featured in museum exhibitions, and is represented by several Ontario
+                            galleries.
+                        </Text>
+                        <Link as={RouterLink} to="/resume" textDecoration="underline" fontWeight="bold" pb={2}>
+                            Brigitte Nowak's CV
+                        </Link>
+                    </GridItem>
+                </Grid>
             </Box>
             <Box as="section" pb={12} px={{ base: 2, md: 0 }}>
                 <Heading pb={2}>About Egg Tempera</Heading>

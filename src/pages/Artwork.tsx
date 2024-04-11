@@ -1,6 +1,7 @@
 import { Box, Grid, GridItem, Image, Text, Heading, VStack, Link } from '@chakra-ui/react'
 import { DISPLAY_TYPES_MAP, TYPES } from '~/config/constants'
 import { Link as RouterLink } from 'react-router-dom'
+import { Oils } from './Oils'
 
 export const Artwork = () => {
     return (
@@ -15,19 +16,7 @@ export const Artwork = () => {
                 textTransform="uppercase">
                 Brigitte Nowak
             </Heading>
-            <Grid
-                w={{ base: '100%', md: '4xl' }}
-                px={{ base: 4, md: 0 }}
-                pt={12}
-                templateColumns={{
-                    base: 'repeat(1, 1fr)',
-                    md: 'repeat(3, 1fr)',
-                }}
-                gap={6}>
-                {TYPES.map(type => (
-                    <ArtType key={type} type={type} />
-                ))}
-            </Grid>
+            <Oils />
         </VStack>
     )
 }
