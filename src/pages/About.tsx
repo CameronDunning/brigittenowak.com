@@ -1,5 +1,8 @@
+import { Box, Flex, Grid, GridItem, Heading, Image, Link, Text } from '@chakra-ui/react'
 import { Link as RouterLink } from 'react-router-dom'
-import { Box, Flex, Grid, GridItem, Heading, Link, Text, Image } from '@chakra-ui/react'
+
+import { EGG_TEMPERA, SERIGRAPHS } from '~/config/constants'
+import { ArtworkTypeByProps } from '~/pages/ArtworkTypeByProps'
 
 export const About = () => {
     return (
@@ -42,6 +45,7 @@ export const About = () => {
                     applications are also possible.
                 </Text>
             </Box>
+            <ArtworkTypeByProps type={EGG_TEMPERA} />
             <Box as="section" pb={12} px={{ base: 2, md: 0 }}>
                 <Heading pb={2}>About serigraphs (also known as screenprints)</Heading>
                 <Text fontWeight="bold" pb={2}>
@@ -52,6 +56,7 @@ export const About = () => {
                     from another source, printing is done by hand, and the screen is reclaimed after the printing process is complete.
                 </Text>
             </Box>
+            <ArtworkTypeByProps type={SERIGRAPHS} />
         </Flex>
     )
 }
