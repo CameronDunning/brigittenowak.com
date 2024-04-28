@@ -4,7 +4,7 @@ export const Resume = () => {
     return (
         <Flex as="main" w={{ base: '100%', md: '4xl' }} flexDirection="column">
             <Box as="section" pb={12}>
-                <Heading pb={2}>Select Solo Exhibitions</Heading>
+                <Heading pb={2}>Selected Solo Exhibitions</Heading>
                 <UnorderedList>
                     <ListItem>2018 “Sentient Beings” Liberty Market Lofts, Tornto, October/November</ListItem>
                     <ListItem>2017 “The Idea of Summer” Latitude 44 Gallery, Toronto June</ListItem>
@@ -70,7 +70,7 @@ export const Resume = () => {
                     </ListItem>
                 </UnorderedList>
             </Box>
-            <Box as="section" pb={12}>
+            {/* <Box as="section" pb={12}>
                 <Heading pb={2}>Representation</Heading>
                 <UnorderedList>
                     <ListItem>Ethel Curry Gallery, Haliburton</ListItem>
@@ -79,7 +79,7 @@ export const Resume = () => {
                     <ListItem>Red Canoe Gallery, Pt. Carling </ListItem>
                     <ListItem> St. Germain Gallery, Toronto </ListItem>
                 </UnorderedList>
-            </Box>
+            </Box> */}
             <Box as="section" pb={12}>
                 <Heading pb={2}>Publications</Heading>
                 <UnorderedList>
