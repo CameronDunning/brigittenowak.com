@@ -1,8 +1,11 @@
 import { Box, Flex, HStack, Heading, Text, VStack } from '@chakra-ui/react'
 
+import { UpcomingShows } from '~/components/UpcomingShows'
+
 export const Representation = () => {
     return (
         <Flex as="main" w={{ base: '100%', md: '4xl' }} flexDirection="column">
+            <UpcomingShows />
             <Box as="section" px={{ base: 2, md: 0 }}>
                 <Heading pb={2}>Galleries</Heading>
                 <GalleryInfo name="Red Canoe Gallery" url="www.redcanoegallery.com" location="Bala, Ontario" />

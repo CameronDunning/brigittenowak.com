@@ -7,15 +7,16 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
 import { Layout } from '~/components/Layout'
 import { NotFound } from '~/pages/404'
+import { About } from '~/pages/About'
 import { Admin } from '~/pages/Admin'
 import { Home } from '~/pages/Home'
-import { About } from '~/pages/About'
 import { Resume } from '~/pages/Resume'
-import { Representation } from './pages/Representation'
-import { Contact } from './pages/Contact'
-import { Artwork } from './pages/Artwork'
-import { ArtworkType } from './pages/ArtworkType'
 import { theme } from '~/styles/customTheme'
+import { Artwork } from '~/pages/Artwork'
+import { ArtworkType } from '~/pages/ArtworkType'
+import { Contact } from '~/pages/Contact'
+import { Representation } from '~/pages/Representation'
+import { AdminEvents } from './pages/AdminEvents'
 
 const ROUTER = createBrowserRouter([
     {
@@ -23,10 +24,11 @@ const ROUTER = createBrowserRouter([
         element: <Layout />,
         children: [
             { path: '/', element: <Home /> },
+            { path: '/admin/events', element: <AdminEvents /> },
             { path: '/admin', element: <Admin /> },
             { path: '/about', element: <About /> },
             { path: '/resume', element: <Resume /> },
-            { path: '/representation', element: <Representation /> },
+            { path: '/galleries', element: <Representation /> },
             { path: '/contact', element: <Contact /> },
             { path: '/artwork', element: <Artwork /> },
             { path: '/artwork/:type', element: <ArtworkType /> },
