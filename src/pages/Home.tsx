@@ -1,8 +1,8 @@
 import { Alert, Flex, Heading, Image, Link, Text } from '@chakra-ui/react'
 import { Link as RouterLink } from 'react-router-dom'
 
-import { useEvents } from '~/stores/EventStore'
 import { Event } from '~/types'
+import { useEvents } from '~/stores/EventStore'
 
 export const Home = () => {
     const events = useEvents()
