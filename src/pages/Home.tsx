@@ -1,6 +1,10 @@
 import { Flex, Heading, Image, Text } from '@chakra-ui/react'
+import { useEvents } from '~/stores/EventStore'
 
 export const Home = () => {
+    const events = useEvents()
+    const upcomingEvents = Object.values(events).filter(event => new Date(event.expiryDate).getTime() > new Date().getTime())
+
     return (
         <Flex as="main" w={{ base: '100%', md: '4xl' }} flexDirection="column" alignItems="center" justifyContent="center">
             <Heading

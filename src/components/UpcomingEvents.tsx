@@ -3,7 +3,7 @@ import { Box, Heading, Image } from '@chakra-ui/react'
 import { useEvents } from '~/stores/EventStore'
 import { Event } from '~/types'
 
-export const UpcomingShows = () => {
+export const UpcomingEvents = () => {
     const events = useEvents()
     const orderedEvents = Object.values(events)
         .filter(event => new Date(event.expiryDate).getTime() > new Date().getTime())
