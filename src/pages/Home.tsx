@@ -12,7 +12,7 @@ export const Home = () => {
 
     return (
         <Flex as="main" w={{ base: '100%', md: '4xl' }} flexDirection="column" alignItems="center" justifyContent="center">
-            {orderedEvents.length > 0 && <UpcomingEventAlert event={orderedEvents[0]} />}
+            {orderedEvents && orderedEvents.length > 0 && <UpcomingEventAlert event={orderedEvents[0]} />}
             <Heading
                 size="4xl"
                 py={8}
