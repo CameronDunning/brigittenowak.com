@@ -1,12 +1,18 @@
-import { Flex, Heading, Image, Text } from '@chakra-ui/react'
+import { Alert, Flex, Heading, Image, Link, Text } from '@chakra-ui/react'
+import { Link as RouterLink } from 'react-router-dom'
+
 import { useEvents } from '~/stores/EventStore'
+import { Event } from '~/types'
 
 export const Home = () => {
     const events = useEvents()
-    const upcomingEvents = Object.values(events).filter(event => new Date(event.expiryDate).getTime() > new Date().getTime())
+    const orderedEvents = Object.values(events)
+        .filter(event => new Date(event.expiryDate).getTime() > new Date().getTime())
+        .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
 
     return (
         <Flex as="main" w={{ base: '100%', md: '4xl' }} flexDirection="column" alignItems="center" justifyContent="center">
+            {orderedEvents.length > 0 && <UpcomingEventAlert event={orderedEvents[0]} />}
             <Heading
                 size="4xl"
                 py={8}
@@ -27,5 +33,17 @@ export const Home = () => {
                 alt="Red Canoe"
             />
         </Flex>
+    )
+}
+
+const UpcomingEventAlert = ({ event }: { event: Event }) => {
+    return (
+        <Alert bg="blue.600" status="info" textAlign="center" justifyContent="center">
+            I'm participating in the&nbsp;
+            <Link as={RouterLink} to="/galleries">
+                {event.title}
+            </Link>
+            !
+        </Alert>
     )
 }
