@@ -3,6 +3,6 @@ import { test } from 'vitest'
 
 import { Representation } from '~/pages/Representation'
 
-test('renders Representation without crashing', () => {
+test('renders Galleries without crashing', () => {
     render(<Representation />)
 })
