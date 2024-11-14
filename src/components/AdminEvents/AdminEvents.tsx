@@ -1,35 +1,13 @@
-import { useState } from 'react'
+import { VStack } from '@chakra-ui/react'
 
-import { InfoOutlineIcon } from '@chakra-ui/icons'
-import {
-    Box,
-    Button,
-    HStack,
-    Heading,
-    Modal,
-    ModalBody,
-    ModalCloseButton,
-    ModalContent,
-    ModalFooter,
-    ModalHeader,
-    ModalOverlay,
-    Select,
-    VStack,
-    useDisclosure,
-    useMediaQuery,
-} from '@chakra-ui/react'
-
-import { MAIN_COLOUR } from '~/styles/customTheme'
 import { useEvents } from '~/stores/EventStore'
 import { AdminEvent } from '~/components/AdminEvents/AdminEvent'
 
 export const AdminEvents = () => {
     const events = useEvents()
-    console.log('events', events)
+    const orderedEvents = Object.values(events)
+        .filter(event => !event.deleted)
+        .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
 
-    return (
-        <>
-            <VStack>{events && events.length && events.map(event => <AdminEvent event={event} />)}</VStack>
-        </>
-    )
+    return <VStack>{orderedEvents && orderedEvents.length && orderedEvents.map(event => <AdminEvent event={event} />)}</VStack>
 }

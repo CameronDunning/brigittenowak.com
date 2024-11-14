@@ -7,6 +7,7 @@ import { Event } from '~/types'
 export const Home = () => {
     const events = useEvents()
     const orderedEvents = Object.values(events)
+        .filter(event => !event.deleted)
         .filter(event => new Date(event.expiryDate).getTime() > new Date().getTime())
         .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
 

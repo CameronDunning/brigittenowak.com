@@ -3,7 +3,7 @@ import { create } from 'zustand'
 import { Event } from '~/types'
 
 type Store = {
-    events: Event[]
+    events: { [key: string]: Event }
 }
 
 type Action = {
@@ -11,7 +11,7 @@ type Action = {
 }
 
 export const EventStore = create<Store & Action>()(set => ({
-    events: [],
+    events: {},
     setEvents: events => {
         set({ events })
     },
