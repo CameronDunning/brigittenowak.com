@@ -42,7 +42,7 @@ export const Layout = () => {
         const eventsRef = ref(db, `/events${folder}/`)
 
         return onValue(eventsRef, snapshot => {
-            const eventSnapshot = snapshot.val()
+            const eventSnapshot = snapshot.val() || {}
             setEvents(eventSnapshot)
         })
     }, [])
