@@ -1,4 +1,5 @@
 import { fireEvent, render } from '@testing-library/react'
+import { BrowserRouter } from 'react-router-dom'
 import { expect, test, vi } from 'vitest'
 
 import { Dashboard } from '~/components/Dashboard'
@@ -19,17 +20,29 @@ Object.defineProperty(window, 'matchMedia', {
 })
 
 test('renders Dashboard without crashing', () => {
-    render(<Dashboard />)
+    render(
+        <BrowserRouter>
+            <Dashboard />
+        </BrowserRouter>
+    )
 })
 
 test('dashboard renders the correct title', () => {
-    const { getByText } = render(<Dashboard />)
+    const { getByText } = render(
+        <BrowserRouter>
+            <Dashboard />
+        </BrowserRouter>
+    )
     const title = getByText(/Welcome to your dashboard/i)
     expect(title).toBeInTheDocument()
 })
 
 test('clicking the upload photo button opens the form', () => {
-    const { getByText, getByTestId } = render(<Dashboard />)
+    const { getByText, getByTestId } = render(
+        <BrowserRouter>
+            <Dashboard />
+        </BrowserRouter>
+    )
     const uploadPhotoButton = getByText(/Upload Photo/i)
     expect(uploadPhotoButton).toBeInTheDocument()
 
