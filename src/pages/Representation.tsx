@@ -12,6 +12,8 @@ export const Representation = () => {
                 <GalleryInfo name="Koyman Galleries" url="www.koymangalleries.com" location="Ottawa, Ontario" />
                 <GalleryInfo name="St. Germain Gallery" url="www.stgermaingallery.com" location="Toronto, Ontario" />
                 <GalleryInfo name="Latitude 44 Gallery" url="www.latitude44gallery.ca" location="Toronto, Ontario" />
+                <GalleryInfo name="Butter Gallery" url="www.buttergallery.ca" location="Collingwood, Ontario" />
+                <GalleryInfo name="Black Spruce Gallery" url="www.blacksprucegallery.ca" location="Saskatchewan" />
                 <GalleryInfo name="ArtMatch.ca" url="www.artmatch.ca/" />
             </Box>
         </Flex>
