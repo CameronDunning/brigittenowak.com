@@ -74,7 +74,6 @@ export const Resume = () => {
                 <Heading pb={2}>Representation</Heading>
                 <UnorderedList>
                     <ListItem>Ethel Curry Gallery, Haliburton</ListItem>
-                    <ListItem>Koyman Galleries, Ottawa </ListItem>
                     <ListItem>Latitude 44 Gallery, Toronto</ListItem>
                     <ListItem>Red Canoe Gallery, Pt. Carling </ListItem>
                     <ListItem> St. Germain Gallery, Toronto </ListItem>

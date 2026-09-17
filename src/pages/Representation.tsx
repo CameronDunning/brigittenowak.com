@@ -9,7 +9,6 @@ export const Representation = () => {
             <Box as="section" px={{ base: 2, md: 0 }}>
                 <Heading pb={2}>Galleries</Heading>
                 <GalleryInfo name="Red Canoe Gallery" url="www.redcanoegallery.com" location="Bala, Ontario" />
-                <GalleryInfo name="Koyman Galleries" url="www.koymangalleries.com" location="Ottawa, Ontario" />
                 <GalleryInfo name="St. Germain Gallery" url="www.stgermaingallery.com" location="Toronto, Ontario" />
                 <GalleryInfo name="Latitude 44 Gallery" url="www.latitude44gallery.ca" location="Toronto, Ontario" />
                 <GalleryInfo name="Butter Gallery" url="www.buttergallery.ca" location="Collingwood, Ontario" />
